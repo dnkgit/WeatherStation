@@ -19,8 +19,8 @@ class DISP_CONTROL:
         self.i2c=I2C(0,sda=Pin(20), scl=Pin(21), freq=400000)    #initializing the I2C method 
         self.display = sh1106.SH1106_I2C(128,64,self.i2c)
 
-        self.workingSetLines = list(initStrings)	# working set
-        self.initSetLines = list(initStrings)		# Golden set 
+        self.workingSetLines = list(initStrings)    # working set
+        self.initSetLines = list(initStrings)        # Golden set 
 
         self.showInitText()
     

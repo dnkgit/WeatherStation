@@ -6,7 +6,7 @@ from adafruit_io_req import AdafruitIO
 from ws_wlan import WS_WLAN
 from time import sleep
 
-import my_secrets
+import my_secrets   # Do not share this file!
 
 lines = ['', '', '', '']
 #d = DISP_CONTROL(lines)
@@ -17,14 +17,13 @@ wl = WS_WLAN(debugRequired=True)
 
 firstData = False
 
-_VERSION        	= const(100)
-
-_SM_INIT			= const(0)
-_SM_DO_CONNECT		= const(1)
-_SM_IDLE			= const(2)
-_SM_UPDATE_RTC		= const(3)
-_SM_UPDATE_VALUES	= const(5)
-_SM_DO_RECONNECT	= const(10)
+_VERSION            = const(100)
+_SM_INIT            = const(0)
+_SM_DO_CONNECT      = const(1)
+_SM_IDLE            = const(2)
+_SM_UPDATE_RTC      = const(3)
+_SM_UPDATE_VALUES   = const(5)
+_SM_DO_RECONNECT    = const(10)
 
 smStateVariable = _SM_INIT
 

@@ -93,10 +93,10 @@ class WS_WLAN():
     def init_WLAN(self):
         self.wlan = network.WLAN(network.STA_IF)
         self.wlan.active(True)
-        self.wlan.config(pm = 0xa11140)	# Set high power
+        self.wlan.config(pm = 0xa11140)    # Set high power
         
     def get_accessPoints(self):        
-        accessPoints = self.wlan.scan()	# Find SSIDs
+        accessPoints = self.wlan.scan()    # Find SSIDs
         self.show_accessPoints(accessPoints)
 
     def show_accessPoints(self, accessPoints):
