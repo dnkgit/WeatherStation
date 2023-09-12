@@ -4,12 +4,12 @@ from time import sleep
 from micropython import const
 from time_ext import TIME_EXT
 
-WLAN_STATE_INIT                 = const(0)
-WLAN_STATE_FIRST_CONNECTION     = const(1)
-WLAN_STATE_FAILED_TO_CONNECT    = const(2)
-WLAN_STATE_CONNECTED            = const(3)
-WLAN_STATE_DISCONNECTED         = const(4)
-WLAN_STATE_RECONNECTED          = const(5)
+WLAN_STATE_INIT 				= const(0)
+WLAN_STATE_FIRST_CONNECTION 	= const(1)
+WLAN_STATE_FAILED_TO_CONNECT	= const(2)
+WLAN_STATE_CONNECTED   			= const(3)
+WLAN_STATE_DISCONNECTED			= const(4)
+WLAN_STATE_RECONNECTED			= const(5)
 
 class WS_WLAN():
 
@@ -17,7 +17,7 @@ class WS_WLAN():
 
         self.ssid = ssid
         self.wpa2_passwd = wpaPassword
-
+        self.ifconfig = ['xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx']
         self.numberOfReconnections = 0
 
         self.stateMachineState = WLAN_STATE_INIT
@@ -25,6 +25,13 @@ class WS_WLAN():
         self.doDebug = debugRequired
 
         self.te = TIME_EXT()
+
+    def setStateMachineState(self, newState):
+        if newState <= WLAN_STATE_RECONNECTED:
+            self.stateMachineState = newState
+
+    def getStateMachineState(self):
+        return self.stateMachineState
 
     def runStateMachine(self):
         
@@ -93,10 +100,10 @@ class WS_WLAN():
     def init_WLAN(self):
         self.wlan = network.WLAN(network.STA_IF)
         self.wlan.active(True)
-        self.wlan.config(pm = 0xa11140)    # Set high power
+        self.wlan.config(pm = 0xa11140)	# Set high power
         
     def get_accessPoints(self):        
-        accessPoints = self.wlan.scan()    # Find SSIDs
+        accessPoints = self.wlan.scan()	# Find SSIDs
         self.show_accessPoints(accessPoints)
 
     def show_accessPoints(self, accessPoints):
@@ -131,6 +138,14 @@ class WS_WLAN():
     def show_WLAN_ifconfig(self):
         data = self.wlan.ifconfig()
         print(f"WLAN ifconfig : {data}")
+
+    def get_WLAN_ipaddress(self):
+        self.ifconfig = self.wlan.ifconfig()
+        return self.ifconfig[0]        
+
+    def get_WLAN_ipgateway(self):
+        self.ifconfig = self.wlan.ifconfig()
+        return self.ifconfig[2]        
 
     def doConnect(self):
 

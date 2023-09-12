@@ -29,6 +29,27 @@ class TIME_EXT:
     def get_totalUptimeSecs(self):
         return self.totalUptime['Seconds']
 
+    def get_totalUptimeString(self):
+        uptime = self.totalUptime['Seconds']
+        
+        if uptime > 0:
+            days = uptime / 86400
+            rem = uptime % 86400
+            
+            hours = rem / 3600
+            rem = rem % 3600
+            
+            mins = rem / 60
+
+            secs = rem % 60
+            
+            days = int(days)
+            hours = int(hours)
+            mins = int(mins)
+            return f"{days:03}d {hours:02}h {mins:02}m {secs:02}s"
+        else: 
+            return "0d 0h 0m 0s"
+
     def isNewSecond(self):
         returnValue = False
         self.updateTime()

@@ -3,6 +3,7 @@
 # if micropython
 import urequests as requests
 from time import sleep
+import gc
 
 class AdafruitIO():
 
@@ -10,7 +11,7 @@ class AdafruitIO():
         
         self.aio_username = aio_username
         self.aio_key = aio_key     
-        self.waitTimeSec = 0.5
+        self.waitTimeSec = 0.2
 
     def setUsername(self, newUsername):
         
@@ -39,6 +40,8 @@ class AdafruitIO():
             body = {'value': str(feedValue)}
             headers = {'X-AIO-Key': self.aio_key, 'Content-Type': 'application/json'}
             
+            gc.collect()
+
             try:
                 r = requests.post(url, json=body, headers=headers)
                 # print(r.text)
@@ -46,4 +49,5 @@ class AdafruitIO():
             except Exception as e:
                 print(f"Adafruit Send Exception [{e}]")
 
+            gc.collect()
             sleep(self.waitTimeSec)
